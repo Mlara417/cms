@@ -46,14 +46,12 @@
                                 $post_comment_count = $row['post_comment_count'];
                                 $post_date = $row['post_date'];
                                 
-                                echo $post_date = $row['post_date'];
-                                
                                 echo "<tr>";
                                 echo "<td>{$post_id}</td>";
                                 echo "<td>{$post_author}</td>";
                                 echo "<td>{$post_title}</td>";
                                 echo "<td>{$post_category_id}</td>";
-                                 echo "<td>{$post_status}</td>";
+                                echo "<td>{$post_status}</td>";
                                 echo "<td><img src='images/'{$post_image}' alt='image'></td>";
                                 echo "<td>{$post_tags}</td>";
                                 echo "<td>{$post_comment_count}</td>";
