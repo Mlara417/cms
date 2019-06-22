@@ -8,11 +8,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Moses's Custom CMS</a>
+                <a class="navbar-brand" href="index.php">Moses's Custom CMS</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                
+                
                 
                 <?php
                     
@@ -21,9 +23,14 @@
                     
                     while($row = mysqli_fetch_assoc($selectAllCategoriesQuery)) {
                        $cat_title = $row['cat_title'];
+                       $cat_id = $row['cat_id'];
                         
-                       echo "<li><a href='#'>{$cat_title}</a></li>";
+                       echo "<li><a href='category.php?category={$cat_id}'>{$cat_title}</a></li>";
                     }
+                    
+                    
+                    
+                    
                     
                     ?>
 

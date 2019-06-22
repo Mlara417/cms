@@ -22,7 +22,10 @@
         
         $search =  $_POST['search'];
         
-        $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' ";
+        $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' OR ";
+        $query .= "post_title LIKE '%$search%' OR ";
+        $query .= "post_author LIKE '%$search%' OR ";
+        $query .= "post_content LIKE '%$search%'";
         
         $searchQuery = mysqli_query($connection, $query);
 
@@ -44,7 +47,7 @@
         $post_author = $row['post_author'];
         $post_date = $row['post_date'];
         $post_image = $row['post_image'];
-        $post_content = $row['post_content'];
+        $post_content = substr($row['post_content'],0,100);
      ?>
                      <h1 class="page-header">
                     Page Heading
