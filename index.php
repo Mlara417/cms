@@ -10,7 +10,9 @@
     <div class="container">
 
         <div class="row">
-
+            <h1 class="page-header">
+Welcome to my custom blog page <br><small>My Blog</small>
+            </h1>
             <!-- Blog Entries Column -->
             <div class="col-md-8">
                 
@@ -26,11 +28,10 @@
         $post_date = $row['post_date'];
         $post_image = $row['post_image'];
         $post_content = $row['post_content'];
+        
+        
      ?>
-                     <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
-                </h1>
+
 
                 <!-- First Blog Post -->
                 <h2>
@@ -42,13 +43,17 @@
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date ?></p>
                 <hr>
-                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+                <img src= "./images/<?php echo $post_image; ?>" alt= "" />
                 <hr>
                 <p><?php echo $post_content ?></p>
                 <a class="btn btn-primary" href="#">Keep Reading <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
                 <?php }
+
+
+
+
                 ?>
 
             </div>
