@@ -126,6 +126,8 @@ if(isset($_GET['delete'])){
     $delete_query = mysqli_query($connection, $query);
     header("Location: comments.php");
     
+    
+    
 }
 
 
