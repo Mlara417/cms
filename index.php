@@ -29,6 +29,15 @@ Welcome to my custom blog page <br><small>My Blog</small>
         $post_date = $row['post_date'];
         $post_image = $row['post_image'];
         $post_content = substr($row['post_content'],0,100);
+        $post_status = $row['post_status'];
+        
+        if( $post_status !== 'published')
+        {
+            
+            echo "<h1 class='text-center'>No Posts Here, Sorry.</h1>";
+            
+        } else {
+            
         
         
      ?>
@@ -50,12 +59,7 @@ Welcome to my custom blog page <br><small>My Blog</small>
                 <a class="btn btn-primary" href="#">Keep Reading <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
-                <?php }
-
-
-
-
-                ?>
+                <?php }  } ?>
 
             </div>
 
