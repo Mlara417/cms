@@ -3,11 +3,11 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Username</th>
-                                    <th>Firstname</th>
-                                    <th>Lastname</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
-                                    <th>Date</th>
+                                    <th colspan="2">Change Role?</th>
                                 </tr>
                             </thead>
                             <tbody>

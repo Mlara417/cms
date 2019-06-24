@@ -36,12 +36,12 @@ if(isset($_POST['create_user'])) {
    <form action="" method="post" enctype="multipart/form-data">
     
     <div class="form-group">
-        <label for="post_author">Firstname</label>
+        <label for="post_author">First Name</label>
         <input type="text" class="form-control" name="user_firstname">
     </div>
     
     <div class="form-group">
-        <label for="post_status">Lastname</label>
+        <label for="post_status">Last Name</label>
         <input type="text" class="form-control" name="user_lastname">
     </div>
     
@@ -50,7 +50,7 @@ if(isset($_POST['create_user'])) {
         <select name="user_role" id=""> 
           <option value="subscriber">Select Options</option>
           <option value="admin">Admin</option>
-          <option value="subscriber">Subscriber</option>
+          <option value="subscriber">subscriber</option>
            
             
             
