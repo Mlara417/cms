@@ -57,7 +57,7 @@ echo "<div class='huge'>{$post_counts}</div>";
                     </div>
                 </div>
             </div>
-            <a href="posts.php">
+            <a href="./posts.php">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -74,12 +74,22 @@ echo "<div class='huge'>{$post_counts}</div>";
                         <i class="fa fa-comments fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                     <div class='huge'>23</div>
+<?php
+
+$query = "SELECT * FROM comments";
+$select_all_comments = mysqli_query($connection, $query);
+
+$comment_counts = mysqli_num_rows($select_all_comments);
+
+echo "<div class='huge'>{$comment_counts}</div>";
+
+?>
+                     
                       <div>Comments</div>
                     </div>
                 </div>
             </div>
-            <a href="comments.php">
+            <a href="./comments.php">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -96,12 +106,21 @@ echo "<div class='huge'>{$post_counts}</div>";
                         <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                    <div class='huge'>23</div>
+<?php
+
+$query = "SELECT * FROM users";
+$select_all_users = mysqli_query($connection, $query);
+
+$user_counts = mysqli_num_rows($select_all_users);
+
+echo "<div class='huge'>{$user_counts}</div>";
+
+?>
                         <div> Users</div>
                     </div>
                 </div>
             </div>
-            <a href="users.php">
+            <a href="./users.php">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -118,12 +137,22 @@ echo "<div class='huge'>{$post_counts}</div>";
                         <i class="fa fa-list fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class='huge'>13</div>
+<?php
+
+$query = "SELECT * FROM categories";
+$select_all_categories = mysqli_query($connection, $query);
+
+$category_counts = mysqli_num_rows($select_all_categories);
+
+echo "<div class='huge'>{$category_counts}</div>";
+
+?>                       
+                    
                          <div>Categories</div>
                     </div>
                 </div>
             </div>
-            <a href="categories.php">
+            <a href="./categories.php">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
