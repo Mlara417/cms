@@ -166,6 +166,30 @@ echo "<div class='huge'>{$category_counts}</div>";
                 
                 
                 
+<?php
+
+$query = "SELECT * FROM posts WHERE post_status = 'draft'";
+$select_all_draft_post = mysqli_query($connection, $query);
+$post_draft_counts = mysqli_num_rows($select_all_draft_post);
+                
+                
+$query = "SELECT * FROM comments WHERE comment_status = 'unapproved'";
+$unapproved_comments_query = mysqli_query($connection, $query);
+$unapproved_comments_counts = mysqli_num_rows($unapproved_comments_query);
+                
+                
+                
+$query = "SELECT * FROM users WHERE user_role = 'subscriber'";
+$select_all_subscribers = mysqli_query($connection, $query);
+
+$subscriber_counts = mysqli_num_rows($select_all_subscribers);
+
+
+?>
+               
+                
+                
+                
     <div class="row">
          <script type="text/javascript">
       google.charts.load('current', {'packages':['bar']});
@@ -173,14 +197,14 @@ echo "<div class='huge'>{$category_counts}</div>";
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Data', 'Posts'],
+          ['Data', 'Count'],
 <?php
 
-$element_text = ['Active Posts','Comments','Users','Categories'];
+$element_text = ['Active Posts','Draft Posts','Comments','Pending Comments','Users','Subscribers','Categories'];
             
-$element_count = [$post_counts,$comment_counts,$user_counts,$category_counts];
+$element_count = [$post_counts,$post_draft_counts,$comment_counts,$unapproved_comments_counts,$user_counts,$subscriber_counts,$category_counts];
 
-    for($i = 0; $i < 4; $i++){
+    for($i = 0; $i < 6; $i++){
         
         echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
         
@@ -206,7 +230,7 @@ $element_count = [$post_counts,$comment_counts,$user_counts,$category_counts];
       }
     </script>
 
-    <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
+    <div id="columnchart_material" style="width: auto; height: auto"></div>
 
         
         
