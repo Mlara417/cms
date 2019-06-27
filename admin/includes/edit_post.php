@@ -95,7 +95,7 @@
                 
         confirm($update_post);
                 
-        echo "Post Updated: " . " " . "<a href='posts.php'>View posts</a> ";
+        echo "Post Updated: " . " " . "<a href='posts.php'>View Posts</a> ";
     }
                 
             
@@ -113,9 +113,31 @@
     </div>
     
     <div class="form-group">
+    <select name="post_status" id="">
+        <option value='<?php echo $post_status; ?>'><?php echo $post_status; ?></option>
+        
+        <?php
+if($post_status == 'published'){
+    
+    echo "<option value='draft'>draft</option>";
+    
+} else {
+    
+    echo "<option value='published'>publish</option>";
+    
+}
+
+
+        ?>
+       
+        
+    </select>
+             </div>
+    
+<!--     <div class="form-group">
         <label for="post_status">Post Status</label>
         <input  value="<?php echo $post_status; ?>" type="text" class="form-control" name="post_status">
-    </div>
+    </div> -->
     
     <div class="form-group">
        <h5>Post Image</h5>
