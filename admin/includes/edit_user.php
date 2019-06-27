@@ -23,7 +23,7 @@ if (isset($_GET['edit_user'])) {
 
 if(isset($_POST['edit_user'])) {
         
-    echo $user_firstname = $_POST['user_firstname'];
+    $user_firstname = $_POST['user_firstname'];
     $user_lastname = $_POST['user_lastname'];
     $user_role = $_POST['user_role'];
     
@@ -52,6 +52,8 @@ if(isset($_POST['edit_user'])) {
         $edit_user_query = mysqli_query($connection, $query);
                 
         confirm($edit_user_query);
+    
+        echo "User {$username} Updated: " . " " . "<a href='users.php'>View Users</a> ";
 }
 
 ?>

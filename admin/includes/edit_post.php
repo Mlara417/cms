@@ -94,6 +94,8 @@
         $update_post = mysqli_query($connection, $query);
                 
         confirm($update_post);
+                
+        echo "Post Updated: " . " " . "<a href='posts.php'>View posts</a> ";
     }
                 
             

@@ -2,7 +2,7 @@
 
 if(isset($_POST['create_user'])) {
         
-    echo $user_firstname = $_POST['user_firstname'];
+    $user_firstname = $_POST['user_firstname'];
     $user_lastname = $_POST['user_lastname'];
     $user_role = $_POST['user_role'];
     
@@ -27,6 +27,8 @@ if(isset($_POST['create_user'])) {
     $create_user_query = mysqli_query($connection, $query);
     
     confirm($create_user_query);
+    
+    echo "User {$username} Created: " . " " . "<a href='users.php'>View Users</a> ";
 }
 
 ?>

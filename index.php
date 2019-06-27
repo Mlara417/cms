@@ -31,14 +31,9 @@ Welcome to my custom blog page <br><small>My Blog</small>
         $post_content = substr($row['post_content'],0,100);
         $post_status = $row['post_status'];
         
-        if( $post_status !== 'published')
+        if( $post_status == 'published')
         {
-            
-            echo "<h1 class='text-center'>No Posts Here, Sorry.</h1>";
-            
-        } else {
-            
-        
+          
         
      ?>
 

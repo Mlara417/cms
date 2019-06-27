@@ -23,6 +23,8 @@ if(isset($_POST['create_post'])) {
     $create_post_query = mysqli_query($connection, $query);
     
     confirm($create_post_query);
+    
+    echo "Post Created: " . " " . "<a href='posts.php'>View Posts</a> ";
 }
 
 ?>
