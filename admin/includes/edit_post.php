@@ -58,7 +58,7 @@
                 
         $post_author = $_POST['post_author'];
         $post_title = $_POST['post_title'];
-        $post_category_id = $_POST['post_category'];
+        $post_category_id = $_POST['post_category_id'];
         $post_status = $_POST['post_status'];
         $post_image = $_FILES['image']['name'];
         $post_image_temp = $_FILES['image']['tmp_name'];
@@ -94,8 +94,7 @@
         $update_post = mysqli_query($connection, $query);
                 
         confirm($update_post);
-                
-        echo "Post Updated: " . " " . "<a href='posts.php'>View Posts</a> ";
+                header("Location: posts.php?source=edit_post&p_id={$the_post_id}");
     }
                 
             
@@ -153,7 +152,7 @@ if($post_status == 'published'){
     <div class="form-group">
 <label for="post_content">Post Content</label>
 <textarea  class="form-control" name="post_content" id="body2" cols="30" rows="10"><?php echo $post_content; ?></textarea>
-           <script>
+   <script>
     ClassicEditor
         .create( document.querySelector( '#body2' ) )
         .catch( error => {
