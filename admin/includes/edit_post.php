@@ -24,41 +24,11 @@
 
 
 
-?>
-  
-   
-
-         <form action="" method="post" enctype="multipart/form-data">
-    
-    
-    <div class="form-group">
-        <label for="post_title">Post Title</label>
-        <input  value="<?php echo $post_title; ?>" type="text" class="form-control" name="post_title">
-    </div>
-    
-    <div class="form-group">
-        <h5>Post Category</h5>   
-        <select name="post_category_id" id=""> 
-        <?php
-
-        $query = "SELECT * FROM categories";
-        $selectCategoriesID = mysqli_query($connection,$query);
-            
-            confirm($selectCategoriesID);
-
-        while($row = mysqli_fetch_assoc($selectCategoriesID)) {
-        $cat_title = $row['cat_title'];
-        $cat_id = $row['cat_id'];
-            
-            echo "<option value='{$cat_id}'>{$cat_title}</option>";
-            
-        }
-            
-            if(isset($_POST['update_post'])) {
+    if(isset($_POST['update_post'])) {
                 
         $post_author = $_POST['post_author'];
         $post_title = $_POST['post_title'];
-        $post_category_id = $_POST['post_category_id'];
+        $post_category_id = $_POST['post_category'];
         $post_status = $_POST['post_status'];
         $post_image = $_FILES['image']['name'];
         $post_image_temp = $_FILES['image']['tmp_name'];
@@ -91,10 +61,56 @@
         $query .= "post_image = '{$post_image}' ";
         $query .= "WHERE post_id = {$the_post_id} ";
                 
-        $update_posts = mysqli_query($connection, $query);
+        $update_post = mysqli_query($connection, $query);
                 
-        confirm($update_posts);
+        confirm($update_post);
+                
+        echo "Post Updated: " . " " . "<a href='../post.php?p_id={$the_post_id}'>View Posts</a> ";
     }
+
+
+
+?>
+  
+   
+
+     <form action="" method="post" enctype="multipart/form-data">
+    
+    
+    <div class="form-group">
+        <label for="post_title">Post Title</label>
+        <input  value="<?php echo $post_title; ?>" type="text" class="form-control" name="post_title">
+    </div>
+    
+    <div class="form-group">
+        <h5>Post Category</h5>   
+        <select name="post_category" id=""> 
+        <?php
+
+        $query = "SELECT * FROM categories";
+        $selectCategoriesID = mysqli_query($connection,$query);
+            
+            confirm($selectCategoriesID);
+
+        while($row = mysqli_fetch_assoc($selectCategoriesID)) {
+            $cat_id = $row['cat_id'];
+            $cat_title = $row['cat_title'];
+            
+            if($post_category_id === $cat_id) {
+                
+                echo "<option value='$cat_id' selected>{$cat_title}</option>";
+                
+            } else {
+                
+                echo "<option value='$cat_id'>{$cat_title}</option>";
+                
+            }
+            
+            
+            
+        }
+            
+ 
                 
             
 
@@ -140,7 +156,7 @@ if($post_status == 'published'){
     <div class="form-group">
        <h5>Post Image</h5>
         <img width="150" src= "../images/<?php echo $post_image; ?>" alt= "" />
-        
+        <input type="file" name="image">
     </div>
     
     <div class="form-group">
