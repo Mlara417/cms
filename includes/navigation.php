@@ -37,9 +37,30 @@
                         <li>
                             <a href="/cms/admin">Admin</a>
                         </li>
-<!--                         <li>
+                        
+<?php
+if(isset($_SESSION['user_role'])) {
+
+    if(isset($_GET['p_id'])) {
+
+    $the_post_id = $_GET['p_id'];
+
+    echo "<li><a href='/admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li> ";
+
+    }
+
+} 
+
+?>
+                       
+           
+              
+
+                
+                       <!--  <li>
                             <a href="#">Services</a>
                         </li>
+                        
                         <li>
                             <a href="#">Contact</a>
                         </li> -->
