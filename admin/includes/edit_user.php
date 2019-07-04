@@ -86,7 +86,7 @@ if(isset($_POST['edit_user'])) {
         <h5>User Role</h5>   
         <select name="user_role" value="<?php echo $user_role; ?>" id=""> 
         
-        <option value="subscriber"><?php echo $user_role; ?></option>   
+        <option value="<?php echo $user_role; ?>"><?php echo $user_role; ?></option>   
          
 <?php
 
