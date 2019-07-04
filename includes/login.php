@@ -32,6 +32,10 @@ if(isset($_POST['login'])) {
         $db_email = $row['user_email'];
         $db_role = $row['user_role'];
         
+    }
+        
+        $password = crypt($password, $db_password);
+        
         if ($username === $db_username && $password === $db_password){
             
             $_SESSION['username'] = $db_username;
@@ -47,7 +51,7 @@ if(isset($_POST['login'])) {
             
         }
         
-    }
+    
     
     
     
