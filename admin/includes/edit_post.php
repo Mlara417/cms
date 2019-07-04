@@ -38,7 +38,7 @@
     
     <div class="form-group">
         <h5>Post Category</h5>   
-        <select name="post_category" id="post_category"> 
+        <select name="post_category_id" id=""> 
         <?php
 
         $query = "SELECT * FROM categories";
@@ -91,10 +91,9 @@
         $query .= "post_image = '{$post_image}' ";
         $query .= "WHERE post_id = {$the_post_id} ";
                 
-        $update_post = mysqli_query($connection, $query);
+        $update_posts = mysqli_query($connection, $query);
                 
-        confirm($update_post);
-                header("Location: posts.php?source=edit_post&p_id={$the_post_id}");
+        confirm($update_posts);
     }
                 
             
