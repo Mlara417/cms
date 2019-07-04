@@ -61,12 +61,17 @@
 <?php
 
 if(isset($_POST['create_comment'])){
+    
     $the_post_id = $_GET['p_id'];
     
     $comment_author = $_POST['comment_author'];
     $comment_email = $_POST['comment_email'];
     $comment_content = $_POST['comment_content'];
+
     
+    if(!empty($comment_author) && !empty($comment_email) && !empty($comment_content)){
+        
+        
     $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
     
     $query .= "VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now())";
@@ -83,9 +88,14 @@ if(isset($_POST['create_comment'])){
     $query .= "WHERE post_id = $the_post_id ";
     
     $update_comment_count = mysqli_query($connection, $query);
-    
-    
-    
+        
+        
+        
+    } else {
+        
+        echo "<script>alert('Fields cannot be empty')</script>";
+        
+    }
     
 }
 
