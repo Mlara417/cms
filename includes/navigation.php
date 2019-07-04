@@ -40,7 +40,7 @@
                         
 <?php
                     
-if(isset($_SESSION['username'])) {
+if(isset($_SESSION['user_role'])) {
 
     if(isset($_GET['p_id'])) {
 

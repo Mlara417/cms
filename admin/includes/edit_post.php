@@ -156,6 +156,7 @@ if($post_status == 'published'){
     <div class="form-group">
        <h5>Post Image</h5>
         <img width="150" src= "../images/<?php echo $post_image; ?>" alt= "" />
+        
         <input type="file" name="image">
     </div>
     
