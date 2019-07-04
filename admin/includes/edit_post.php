@@ -65,7 +65,7 @@
                 
         confirm($update_post);
                 
-        echo "Post Updated: " . " " . "<a href='../post.php?p_id={$the_post_id}'>View Posts</a> ";
+        echo "<p class='bg-success'>Post Updated: <a href='../post.php?p_id={$the_post_id}'>View Posts</a> or <a href='posts.php'>Edit More Posts</a></p>";
     }
 
 
