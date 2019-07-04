@@ -14,8 +14,8 @@
                                     <th>Delete</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            
+                            <tbody> 
+                                                  
                             <?php
                                 
                             $query = "SELECT * FROM posts";
