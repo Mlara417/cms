@@ -175,6 +175,7 @@ while ($row = mysqli_fetch_array($select_comment_query)) {
 
 
         </div>
+        </div>
         <!-- /.row -->
 
         <hr>
