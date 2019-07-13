@@ -14,7 +14,7 @@
                             
                             <small>
                             
-                            <?php echo $_SESSION['username'] ?> 
+                            <?php showUsername(); ?> 
                              </small>
                         </h1>
                         
@@ -42,16 +42,8 @@
                         <i class="fa fa-file-text fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-<?php
-
-$query = "SELECT * FROM posts";
-$select_all_post = mysqli_query($connection, $query);
-
-$post_counts = mysqli_num_rows($select_all_post);
-
-echo "<div class='huge'>{$post_counts}</div>";
-
-?>
+                        
+                        <?php postCountQueryDashboard(); ?>
                                    
                         <div>Posts</div>
                     </div>
@@ -74,16 +66,8 @@ echo "<div class='huge'>{$post_counts}</div>";
                         <i class="fa fa-comments fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-<?php
-
-$query = "SELECT * FROM comments";
-$select_all_comments = mysqli_query($connection, $query);
-
-$comment_counts = mysqli_num_rows($select_all_comments);
-
-echo "<div class='huge'>{$comment_counts}</div>";
-
-?>
+                    
+                      <?php commentCountQueryDashboard(); ?>
                      
                       <div>Comments</div>
                     </div>
@@ -106,16 +90,9 @@ echo "<div class='huge'>{$comment_counts}</div>";
                         <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-<?php
-
-$query = "SELECT * FROM users";
-$select_all_users = mysqli_query($connection, $query);
-
-$user_counts = mysqli_num_rows($select_all_users);
-
-echo "<div class='huge'>{$user_counts}</div>";
-
-?>
+                        
+                        <?php userCountQueryDashboard(); ?>
+                        
                         <div> Users</div>
                     </div>
                 </div>
@@ -137,16 +114,8 @@ echo "<div class='huge'>{$user_counts}</div>";
                         <i class="fa fa-list fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-<?php
-
-$query = "SELECT * FROM categories";
-$select_all_categories = mysqli_query($connection, $query);
-
-$category_counts = mysqli_num_rows($select_all_categories);
-
-echo "<div class='huge'>{$category_counts}</div>";
-
-?>                       
+                    
+                    <?php categoryCountQueryDashboard(); ?>                       
                     
                          <div>Categories</div>
                     </div>
@@ -166,50 +135,32 @@ echo "<div class='huge'>{$category_counts}</div>";
                 
                 
                 
-<?php
+    <?php
 
-$query = "SELECT * FROM posts WHERE post_status = 'published'";
-$select_all_published_post = mysqli_query($connection, $query);
-$post_published_counts = mysqli_num_rows($select_all_published_post);
-                
-                
-$query = "SELECT * FROM posts WHERE post_status = 'draft'";
-$select_all_draft_post = mysqli_query($connection, $query);
-$post_draft_counts = mysqli_num_rows($select_all_draft_post);
-                
-                
-$query = "SELECT * FROM comments WHERE comment_status = 'unapproved'";
-$unapproved_comments_query = mysqli_query($connection, $query);
-$unapproved_comments_counts = mysqli_num_rows($unapproved_comments_query);
-                
-                
-                
-$query = "SELECT * FROM users WHERE user_role = 'subscriber'";
-$select_all_subscribers = mysqli_query($connection, $query);
+        publishedPostCountQuery();
+        draftPostCountQuery();
+        unapprovedCommentCountQuery();
+        subscriberCountQuery();
 
-$subscriber_counts = mysqli_num_rows($select_all_subscribers);
-
-
-?>
+    ?>
                
                 
                 
                 
     <div class="row">
-         <script type="text/javascript">
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Data', 'Count'],
-<?php
-
-$element_text = ['All Posts','Active Posts','Draft Posts','Comments','Pending Comments','Users','Subscribers','Categories'];
+     <script type="text/javascript">
+         google.charts.load('current', {'packages':['bar']});
+         google.charts.setOnLoadCallback(drawChart);
+         
+         function drawChart() {
+             var data = google.visualization.arrayToDataTable([
+                 ['Data', 'Count'],
+                 <?php 
+            $element_text = ['All Posts','Active Posts','Draft Posts','Comments','Pending Comments','Users','Subscribers','Categories'];           
             
-$element_count = [$post_counts,$post_published_counts,$post_draft_counts,$comment_counts,$unapproved_comments_counts,$user_counts,$subscriber_counts,$category_counts];
+            $element_count = [$post_counts,$post_published_counts,$post_draft_counts,$comment_counts,$unapproved_comments_counts,$user_counts,$subscriber_counts,$category_counts];
 
-    for($i = 0; $i < 6; $i++){
+    for($i = 0; $i < 8; $i++){
         
         echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
         
