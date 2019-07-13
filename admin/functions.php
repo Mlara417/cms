@@ -1,4 +1,212 @@
 <?php
+function editPost() {
+    global $connection, $post_title, $the_post_id;
+    
+    if(isset($_GET['p_id'])){
+
+    $the_post_id =  $_GET['p_id'];
+
+    }
+
+
+    $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
+    $selectPostsById = mysqli_query($connection,$query);
+
+    while($row = mysqli_fetch_assoc($selectPostsById)) {
+        $post_author = $row['post_author'];
+        $post_id = $row['post_id'];
+        $post_title = $row['post_title'];
+        $post_category_id = $row['post_category_id'];
+        $post_status = $row['post_status'];
+        $post_image = $row['post_image'];
+        $post_content = $row['post_content'];
+        $post_tags = $row['post_tags'];
+        $post_comment_count = $row['post_comment_count'];
+        $post_date = $row['post_date'];
+    }
+    
+    return $post_title;
+
+
+
+    if(isset($_POST['update_post'])) {
+                
+        $post_author2 = $_POST['post_author'];
+        $post_title2 = $_POST['post_title'];
+        $post_category_id2 = $_POST['post_category'];
+        $post_status2 = $_POST['post_status'];
+        $post_image2 = $_FILES['image']['name'];
+        $post_image_temp2 = $_FILES['image']['tmp_name'];
+        $post_content2 = $_POST['post_content'];
+        $post_tags2 = $_POST['post_tags'];
+                
+        move_uploaded_file($post_image_temp2, "../images/$post_image2");
+                
+        if(empty($post_image2)) {
+            
+            $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
+            
+            $select_image = mysqli_query($connection,$query);
+            
+            while($row = mysqli_fetch_array($select_image)) {
+                
+                $post_image2 = $row['post_image'];
+                
+            }
+        }
+                
+        $query = "UPDATE posts SET ";
+        $query .= "post_title = '{$post_title2}', ";
+        $query .= "post_category_id = '{$post_category_id2}', ";
+        $query .= "post_date = now(), ";
+        $query .= "post_author = '{$post_author2}', ";
+        $query .= "post_status = '{$post_status2}', ";
+        $query .= "post_tags = '{$post_tags2}', ";
+        $query .= "post_content = '{$post_content2}', ";
+        $query .= "post_image = '{$post_image2}' ";
+        $query .= "WHERE post_id = {$the_post_id} ";
+                
+        $update_post = mysqli_query($connection, $query);
+                
+        confirm($update_post);
+                
+        echo "<p class='bg-success'>Post Updated: <a href='../post.php?p_id={$the_post_id}'>View Posts</a> or <a href='posts.php'>Edit More Posts</a></p>";
+    }
+    
+    
+}
+
+
+
+
+
+
+
+
+function adminUserRoleValidation() {
+    global $connection;
+    
+    if(!isset($_SESSION['user_role'])) {
+
+            header("Location: ../index.php");
+
+    }
+    
+}
+
+
+
+
+
+
+
+function createUser() {
+    global $connection;
+    
+    if(isset($_POST['create_user'])) {
+
+        $user_firstname = $_POST['user_firstname'];
+        $user_lastname = $_POST['user_lastname'];
+        $user_role = $_POST['user_role'];
+        $username = $_POST['username'];
+        $user_email = $_POST['user_email'];
+        $user_password = $_POST['user_password'];
+
+            $query = "SELECT randSalt FROM users";
+            $select_randsalt_query = mysqli_query($connection, $query);
+            if(!$select_randsalt_query) {
+                die("Query Failed" . mysqli_error($connection));
+            }
+
+            $row = mysqli_fetch_array($select_randsalt_query);
+            $salt = $row['randSalt'];
+            $hashed_password = crypt($user_password, $salt);
+
+        $query ="INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password) ";
+
+        $query .= "VALUES ('{$user_firstname}','{$user_lastname}','{$user_role}','{$username}','{$user_email}','{$hashed_password}')";
+
+        $create_user_query = mysqli_query($connection, $query);
+
+        confirm($create_user_query);
+
+        echo "User {$username} Created: " . " " . "<a href='users.php'>View Users</a> ";
+    }
+} 
+
+
+
+
+
+
+function categoryDropdownOptions() {
+    global $connection;
+    
+    $query = "SELECT * FROM categories";
+    $selectCategoriesID = mysqli_query($connection,$query);
+
+        confirm($selectCategoriesID);
+
+    while($row = mysqli_fetch_assoc($selectCategoriesID)) {
+    $cat_title = $row['cat_title'];
+    $cat_id = $row['cat_id'];
+
+        echo "<option value='{$cat_id}'>{$cat_title}</option>";
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+function createPost() {
+    global $connection;
+    
+    if(isset($_POST['create_post'])) {
+
+        $post_title = $_POST['post_title'];
+        $post_author = $_POST['post_author'];
+        $post_category_id = $_POST['post_category'];
+        $post_status = $_POST['post_status'];
+
+        $post_image = $_FILES['image']['name'];
+        $post_image_temp = $_FILES['image']['tmp_name'];
+
+        $post_tags = $_POST['post_tags'];
+        $post_content = $_POST['post_content'];
+        $post_date = date('m-d-y');
+
+        move_uploaded_file($post_image_temp, "../images/$post_image");
+
+        $query ="INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) ";
+
+        $query .= "VALUES ({$post_category_id},'{$post_title}','{$post_author}',now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_status}')";
+
+        $create_post_query = mysqli_query($connection, $query);
+
+        confirm($create_post_query);
+
+        $the_post_id = mysqli_insert_id($connection);
+
+            echo "<p class='bg-success'>Post Created: <a href='../post.php?p_id={$the_post_id}'>View Post</a> or <a href='posts.php'>Edit Posts</a></p>";
+    }
+}
+
+
+
+
+
+
+
+
+
+
 function createCategoryListSidebar() {
     global $connection, $selectCategoriesSidebar;
     
@@ -868,23 +1076,23 @@ function insert_categories(){
     
     global $connection;
 
-                            if(isset($_POST['submit'])) {
-                                $cat_title = $_POST['cat_title'];
+    if(isset($_POST['submit'])) {
+        $cat_title = $_POST['cat_title'];
 
-                                if($cat_title == "" || empty($cat_title)) {
-                                    echo "This field should not be empty";
-                                } else {
+        if($cat_title == "" || empty($cat_title)) {
+            echo "This field should not be empty";
+        } else {
 
-                                    $query = "INSERT INTO categories(cat_title) ";
-                                    $query .= "VALUE('{$cat_title}') ";
+            $query = "INSERT INTO categories(cat_title) ";
+            $query .= "VALUE('{$cat_title}') ";
 
-                                    $createCategoryQuery = mysqli_query($connection, $query);
+            $createCategoryQuery = mysqli_query($connection, $query);
 
-                                    if(!$createCategoryQuery) {
-                                        die('Query Failed'. mysqli_error($connection));
-                                    }
-                                        }
-                            }
+            if(!$createCategoryQuery) {
+                die('Query Failed'. mysqli_error($connection));
+            }
+                }
+    }
 }
 
 
@@ -900,20 +1108,20 @@ function findAllCategories() {
     
     global $connection;
                                 
-                        $query = "SELECT * FROM categories";
-                        $selectCategories = mysqli_query($connection,$query);
-                                
-                        while($row = mysqli_fetch_assoc($selectCategories)) {
-                            $cat_title = $row['cat_title'];
-                            $cat_id = $row['cat_id'];
-                            
-                            echo "<tr>";
-                            echo "<td>{$cat_id}</td>";
-                            echo "<td>{$cat_title}</td>";
-                            echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
-                            echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
-                            echo "</tr>";
-                        }    
+    $query = "SELECT * FROM categories";
+    $selectCategories = mysqli_query($connection,$query);
+
+    while($row = mysqli_fetch_assoc($selectCategories)) {
+        $cat_title = $row['cat_title'];
+        $cat_id = $row['cat_id'];
+
+        echo "<tr>";
+        echo "<td>{$cat_id}</td>";
+        echo "<td>{$cat_title}</td>";
+        echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
+        echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
+        echo "</tr>";
+    }    
     
     
 }
@@ -927,15 +1135,16 @@ function findAllCategories() {
 
 function deleteCategories(){
     global $connection;
-                        if(isset($_GET['delete'])) {
-                            $the_cat_id = $_GET['delete'];
-                            
-                            $query = "DELETE FROM categories WHERE cat_id = {$the_cat_id} ";
-                            $delete_query = mysqli_query($connection, $query);
-                            
-                            header("Location: categories.php"); //sends another request for page and refreshes page
-                            
-                        }    
+    
+    if(isset($_GET['delete'])) {
+        $the_cat_id = $_GET['delete'];
+
+        $query = "DELETE FROM categories WHERE cat_id = {$the_cat_id} ";
+        $delete_query = mysqli_query($connection, $query);
+
+        header("Location: categories.php"); //sends another request for page and refreshes page
+
+    }    
     
 }
 
