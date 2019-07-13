@@ -1,4 +1,31 @@
 <?php
+function viewAllComments() {
+    global $connection;
+
+    if (isset($_GET['source'])) {
+        
+        $source = $_GET['source'];
+        
+    } else {
+
+        $source = '';
+        
+    }
+    
+    switch($source) {
+            
+        default;
+            include "includes/view_all_comments.php";
+            break;
+            
+        }
+}
+
+
+
+
+
+
 function editCategories(){
     global $connection;
     
