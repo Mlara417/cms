@@ -1,4 +1,19 @@
 <?php
+function editCategories(){
+    global $connection;
+    
+    if(isset($_GET['edit'])) {
+
+        $cat_id = $_GET['edit'];
+
+        include "includes/update_categories.php";
+
+    }
+    
+}
+
+
+
 function chartElements() {
     global $element_text, $element_count, $i,$post_counts,$post_published_counts,$post_draft_counts,$comment_counts,$unapproved_comments_counts,$user_counts,$subscriber_counts,$category_counts;
     

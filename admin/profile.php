@@ -85,7 +85,8 @@ if(isset($_POST['update_user'])) {
                             
                             <small>
                             
-                            <?php echo $_SESSION['username'] ?> 
+                            <?php  showUsername(); ?>
+                             
                              </small>
                         </h1>
                         

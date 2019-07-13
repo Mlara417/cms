@@ -14,13 +14,15 @@
                             
                             <small>
                             
-                            <?php echo $_SESSION['username'] ?> 
+                            <?php  showUsername(); ?> 
+                            
                              </small>
                         </h1>
                         
                         <div class="col-xs-6">
                            
-                        <?php insert_categories(); ?>
+                            <?php insert_categories(); ?>
+                            
                             <form action="" method="post">
                                <label for="cat_title">Add Category</label>
                                 <div class="form-group">
@@ -31,19 +33,7 @@
                                 </div>
                             </form>
                             
-                            <?php //UPDATE & INCLUDE QUERY
-                            
-                            if(isset($_GET['edit'])) {
-                                
-                                $cat_id = $_GET['edit'];
-                                
-                                include "includes/update_categories.php";
-                                
-                            }
-
-
-
-?>
+                            <?php editCategories(); ?>
                            
                             
                         </div> 
@@ -61,22 +51,11 @@
                             </thead>
                             <tbody>
                                  
-                    <?php //FIND ALL CATEGORIES QUERY                         
-                        findAllCategories();
-                                
-                                ?>
-                          
-                        
-                           
-                    <?php //DELETE ROW QUERY
+                            <?php findAllCategories(); ?>
 
-                        deleteCategories();        
-
-                    ?>
+                            <?php deleteCategories();  ?>
                           
-                           
-                           
-                           
+
                             </tbody>
                         </table>    
                         </div>

@@ -14,7 +14,7 @@
                             
                             <small>
                             
-                            <?php echo $_SESSION['username'] ?> 
+                            <?php  showUsername(); ?> 
                              </small>
                         </h1>
                         

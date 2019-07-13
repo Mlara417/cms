@@ -15,6 +15,7 @@
                             <small>
                             
                             <?php showUsername(); ?> 
+                            
                              </small>
                         </h1>
                         
