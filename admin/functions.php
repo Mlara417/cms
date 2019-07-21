@@ -1,4 +1,394 @@
 <?php
+function updateCategory() {
+    global $connection, $cat_id;
+
+    if(isset($_POST['update_category'])) {
+        $the_cat_title = $_POST['cat_title'];
+
+        $query = "UPDATE categories SET cat_title = $the_cat_title WHERE cat_id = $cat_id ";
+        $update_query = mysqli_query($connection, $query);
+
+        if(!$update_query){
+            die("Query failed " . mysqli_error($connection));
+        }
+
+        header("Location: categories.php"); //sends another request for page and refreshes page
+
+    }
+
+}
+
+
+
+
+function showCategory() {
+    global $connection;
+    
+    if(isset($_GET['update_category'])){
+
+        $cat_id = $_GET['update_category'];    
+
+    $query = "SELECT * FROM categories";
+    $selectCategoriesID = mysqli_query($connection,$query);
+
+    while($row = mysqli_fetch_assoc($selectCategoriesID)) {
+        $cat_title = $row['cat_title'];
+        $cat_id = $row['cat_id'];
+
+        ?>
+
+<input value="<?php if(isset($cat_title)){echo $cat_title;} ?>
+" type="text" class="form-control" name="cat_title">
+
+  <?php  }}
+    
+}
+
+
+
+
+function deleteComment() {
+    global $connection;
+    
+    if(isset($_GET['delete'])){
+
+        $the_comment_id = $_GET['delete'];
+
+        $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id}";
+        $delete_query = mysqli_query($connection, $query);
+        header("Location: comments.php");
+
+
+
+    }
+    
+}
+
+
+
+
+function unApproveComment() {
+    global $connection;
+    
+    if(isset($_GET['unapproved'])){
+
+        $the_comment_id = $_GET['unapproved'];
+
+        $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = {$the_comment_id} ";
+        $unapproved_comment_query = mysqli_query($connection, $query);
+        header("Location: comments.php");
+
+    }
+
+}
+
+
+
+function approveComment() {
+    global $connection;
+    
+    if(isset($_GET['approved'])){
+
+        $the_comment_id = $_GET['approved'];
+
+        $query = "UPDATE comments SET comment_status='approved' WHERE comment_id = {$the_comment_id} ";
+        $approved_comment_query = mysqli_query($connection, $query);
+        header("Location: comments.php");
+
+    }
+    
+}
+
+
+
+
+
+function viewAllCommentsTable() {
+    global $connection;
+
+    $query = "SELECT * FROM comments";
+    $select_comments = mysqli_query($connection,$query);
+
+    while($row = mysqli_fetch_assoc($select_comments)) {
+        $comment_id = $row['comment_id'];
+        $comment_post_id = $row['comment_post_id'];
+        $comment_author = $row['comment_author'];
+        $comment_email = $row['comment_email'];
+        $comment_content = $row['comment_content'];
+        $comment_status = $row['comment_status'];
+        $comment_date = $row['comment_date'];
+
+        echo "<tr>";
+        echo "<td>{$comment_id}</td>";
+        echo "<td>{$comment_author}</td>";
+        echo "<td>$comment_content</td>";
+        echo "<td>{$comment_email}</td>";
+        echo "<td>{$comment_status}</td>";
+
+
+        $query = "SELECT * FROM posts WHERE post_id = $comment_post_id ";
+
+        $select_post_id_query = mysqli_query($connection, $query);
+        while($row = mysqli_fetch_assoc($select_post_id_query)){
+            $post_id = $row['post_id'];
+            $post_title = $row['post_title'];
+
+            echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
+        }
+
+
+
+
+
+
+
+        echo "<td>{$comment_date}</td>";
+        echo "<td><a href='comments.php?approved=$comment_id'>Approve</a></td>";
+        echo "<td><a href='comments.php?unapproved=$comment_id'>Unapprove</a></td>";
+        echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";
+        echo "</tr>";
+
+    }
+}
+
+
+
+
+function deletePost() {
+    global $connection;
+    
+    if(isset($_GET['delete'])){
+
+        $the_post_id = $_GET['delete'];
+
+        $query = "DELETE FROM posts WHERE post_id = {$the_post_id}";
+        $delete_query = mysqli_query($connection, $query);
+        header("Location: posts.php");
+
+
+
+    }
+}
+
+
+
+function viewAllPosts() {
+    global $connection;
+
+    $query = "SELECT * FROM posts";
+    $selectPosts = mysqli_query($connection,$query);
+
+    while($row = mysqli_fetch_assoc($selectPosts)) {
+        $post_author = $row['post_author'];
+        $post_id = $row['post_id'];
+        $post_title = $row['post_title'];
+        $post_category_id = $row['post_category_id'];
+        $post_status = $row['post_status'];
+        $post_image = $row['post_image'];
+        $post_tags = $row['post_tags'];
+        $post_comment_count = $row['post_comment_count'];
+        $post_date = $row['post_date'];
+
+        echo "<tr>";
+
+        ?>
+
+        <td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='<?php echo $post_id; ?>'></td>
+
+
+        <?php
+        echo "<td>{$post_id}</td>";
+        echo "<td>{$post_author}</td>";
+        echo "<td>{$post_title}</td>";
+
+
+$query = "SELECT * FROM categories WHERE cat_id ={$post_category_id} ";
+$selectCategoriesID = mysqli_query($connection,$query);
+
+while($row = mysqli_fetch_assoc($selectCategoriesID)) {
+$cat_title = $row['cat_title'];
+$cat_id = $row['cat_id'];
+
+echo "<td>{$cat_title}</td>";
+
+}
+
+
+
+
+
+
+        echo "<td>{$post_status}</td>";
+        echo "<td><img class='img-responsive' src='../images/$post_image' alt='image'></td>";
+        echo "<td>{$post_tags}</td>";
+
+        $query = "SELECT * FROM comments WHERE comment_post_id = $post_id";
+        $send_comment_query = mysqli_query($connection, $query);
+        $count_comments = mysqli_num_rows($send_comment_query);
+
+
+        echo "<td>{$count_comments}</td>";
+
+
+
+
+
+        echo "<td>{$post_date}</td>";
+        echo "<td><a href='../post.php?p_id={$post_id}'>View Post</a></td>";
+        echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
+        echo "<td><a onClick=\"javacript: return confirm('Are you sure you want to delete?');\" href='posts.php?delete={$post_id}'>Delete</a></td>";
+        echo "</tr>";
+
+    }
+    
+}
+
+
+
+
+
+function bulkOptionsCheckboxArray() {
+    global $connection;
+    
+if(isset($_POST['checkBoxArray'])){
+    
+    foreach($_POST['checkBoxArray'] as $postValueId) {
+        
+       $bulk_options = $_POST['bulk_options'];
+        
+        switch($bulk_options) {
+            case 'published':
+                
+                $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id= '{$postValueId}' ";
+                
+                $update_to_published_status = mysqli_query($connection, $query);
+                
+                confirm($update_to_published_status);
+                
+                break;
+                
+            case 'draft':
+                
+                $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id= '{$postValueId}' ";
+                
+                $update_to_draft_status = mysqli_query($connection, $query);
+                
+                confirm($update_to_draft_status);
+                
+                break;
+
+            case 'delete':
+                
+                $query = "DELETE FROM posts WHERE post_id= '{$postValueId}' ";
+                
+                $update_to_delete_status = mysqli_query($connection, $query);
+                
+                confirm($update_to_delete_status);
+                
+                break;
+                
+                
+        }
+        
+    }
+    
+}
+}
+
+
+
+
+
+function deleteUser() {
+    global $connection;
+    
+    if(isset($_GET['delete'])){
+    
+    $the_user_id = $_GET['delete'];
+    
+    $query = "DELETE FROM users WHERE user_id = {$the_user_id}";
+    $delete_query = mysqli_query($connection, $query);
+    header("Location: users.php");
+    
+    
+    
+}       
+}
+
+
+
+
+function changeToSubscriber() {
+    global $connection; 
+    
+    if(isset($_GET['change_to_sub'])){
+
+        $the_user_id = $_GET['change_to_sub'];
+
+        $query = "UPDATE users SET user_role = 'subscriber' WHERE user_id = {$the_user_id} ";
+        $change_to_sub_query = mysqli_query($connection, $query);
+        header("Location: users.php");
+
+    }
+    
+}
+
+
+
+
+
+
+function changeToAdmin() {
+    global $connection;
+    
+    if(isset($_GET['change_to_admin'])){
+    
+    $the_user_id = $_GET['change_to_admin'];
+    
+    $query = "UPDATE users SET user_role='admin' WHERE user_id = {$the_user_id} ";
+    $change_to_admin_query = mysqli_query($connection, $query);
+    header("Location: users.php");
+    
+}
+    
+    
+}
+
+
+
+
+function viewAllUsers() {
+    global $connection;
+    
+    $query = "SELECT * FROM users";
+    $select_users = mysqli_query($connection,$query);
+
+    while($row = mysqli_fetch_assoc($select_users)) {
+        $user_id = $row['user_id'];
+        $username = $row['username'];
+        $user_password = $row['user_password'];
+        $user_firstname = $row['user_firstname'];
+        $user_lastname = $row['user_lastname'];
+        $user_email = $row['user_email'];
+        $user_image = $row['user_image'];
+        $user_role = $row['user_role'];
+
+        echo "<tr>";
+        echo "<td>{$user_id}</td>";
+        echo "<td>{$username}</td>";
+        echo "<td>$user_firstname</td>";
+        echo "<td>$user_lastname</td>";
+        echo "<td>{$user_email}</td>";
+        echo "<td>{$user_role}</td>";         
+        echo "<td><a href='users.php?change_to_admin={$user_id}'>Admin</a></td>";
+        echo "<td><a href='users.php?change_to_sub={$user_id}'>Subscriber</a></td>";
+        echo "<td><a href='users.php?source=edit_user&edit_user={$user_id}'>Edit</a></td>";
+        echo "<td><a href='users.php?delete={$user_id}'>Delete</a></td>";
+        echo "</tr>";
+
+    }
+}
+
 function editPost() {
     global $connection, $post_title;
     

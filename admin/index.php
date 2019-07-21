@@ -133,20 +133,12 @@
     </div>
 </div>
                 <!-- /.row -->
-                
-                
-                
-    <?php
 
-        publishedPostCountQuery();
-        draftPostCountQuery();
-        unapprovedCommentCountQuery();
-        subscriberCountQuery();
-
-    ?>
-               
-                
-                
+        <?php publishedPostCountQuery(); ?>
+        <?php draftPostCountQuery(); ?>
+        <?php unapprovedCommentCountQuery(); ?>
+        <?php subscriberCountQuery(); ?>
+      
                 
     <div class="row">
      <script type="text/javascript">

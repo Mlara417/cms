@@ -147,12 +147,6 @@ if($post_status == 'published'){
         
     </select>
              </div>
-    
-<!--     <div class="form-group">
-        <label for="post_status">Post Status</label>
-        <input  value="<?php echo $post_status; ?>" type="text" class="form-control" name="post_status">
-    </div> -->
-    
     <div class="form-group">
        <h5>Post Image</h5>
         <img width="150" src= "../images/<?php echo $post_image; ?>" alt= "" />

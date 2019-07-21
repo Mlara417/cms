@@ -2,25 +2,7 @@
                                 <label for="cat_title">Edit Category</label>
                                 <div class="form-group">
 
-                                <?php
-                                    
-                        if(isset($_GET['update_category'])){
-                            
-                            $cat_id = $_GET['update_category'];    
-                        
-                        $query = "SELECT * FROM categories";
-                        $selectCategoriesID = mysqli_query($connection,$query);
-                                
-                        while($row = mysqli_fetch_assoc($selectCategoriesID)) {
-                            $cat_title = $row['cat_title'];
-                            $cat_id = $row['cat_id'];
-                            
-                            ?>
-                                   
-                <input value="<?php if(isset($cat_title)){echo $cat_title;} ?>
-" type="text" class="form-control" name="cat_title">
-                                    
-                      <?php  }} ?>
+                                <?php showCategory(); ?>
                            
                     <?php //UPDATE QUERY
                                 
