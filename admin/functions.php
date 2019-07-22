@@ -1,6 +1,6 @@
 <?php
-function updateCategory() {
-    global $connection, $cat_id;
+function updateCategory($cat_id) {
+    global $connection;
 
     if(isset($_POST['update_category'])) {
         $the_cat_title = $_POST['cat_title'];
@@ -1264,10 +1264,17 @@ function editCategories(){
     if(isset($_GET['edit'])) {
 
         $cat_id = $_GET['edit'];
+        
 
         include "includes/update_categories.php";
+        
+        return $cat_id;
+        
+        
 
     }
+    
+    
     
 }
 

@@ -3,7 +3,7 @@
                                 <div class="form-group">
 
                                 <?php showCategory(); ?>
-                                <?php updateCategory(); ?>
+                                <?php updateCategory($cat_id); ?>
                             
 
                                    
