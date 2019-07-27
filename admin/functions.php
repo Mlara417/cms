@@ -1,6 +1,17 @@
 <?php
+<<<<<<< Updated upstream
 function editPost() {
     global $connection;
+=======
+function postStatusToggleUpdate($post_status) {
+    global $connection;
+    
+    if($post_status == 'published'){
+    
+    echo "<option value='draft'>draft</option>";
+    
+} else {
+>>>>>>> Stashed changes
     
     if(isset($_GET['p_id'])){
 
@@ -31,7 +42,16 @@ function editPost() {
 
 
 
+<<<<<<< Updated upstream
     if(isset($_POST['update_post'])) {
+=======
+function updatePost() {
+    
+    global $connection,$post_author, $post_status, $post_image, $post_tags, $post_content, $post_id;
+    
+    
+        if(isset($_POST['update_post'])) {
+>>>>>>> Stashed changes
                 
         $post_author = $_POST['post_author'];
         $post_title = $_POST['post_title'];
@@ -46,7 +66,7 @@ function editPost() {
                 
         if(empty($post_image)) {
             
-            $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
+            $query = "SELECT * FROM posts WHERE post_id = $post_id ";
             
             $select_image = mysqli_query($connection,$query);
             
@@ -66,7 +86,7 @@ function editPost() {
         $query .= "post_tags = '{$post_tags}', ";
         $query .= "post_content = '{$post_content}', ";
         $query .= "post_image = '{$post_image}' ";
-        $query .= "WHERE post_id = {$the_post_id} ";
+        $query .= "WHERE post_id = {$post_id} ";
                 
         $update_post = mysqli_query($connection, $query);
                 
@@ -78,6 +98,46 @@ function editPost() {
 
 
 
+<<<<<<< Updated upstream
+=======
+
+function editMyPost() {
+    global $connection;
+    
+    if(isset($_GET['p_id'])){
+
+    $the_post_id =  $_GET['p_id'];
+        }
+
+    
+
+
+    $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
+    $selectPostsById = mysqli_query($connection,$query);
+
+    while($row = mysqli_fetch_assoc($selectPostsById)) {
+        $post_author = $row['post_author'];
+        $post_id = $row['post_id'];
+        $post_title = $row['post_title'];
+        $post_category_id = $row['post_category_id'];
+        $post_status = $row['post_status'];
+        $post_image = $row['post_image'];
+        $post_content = $row['post_content'];
+        $post_tags = $row['post_tags'];
+        $post_comment_count = $row['post_comment_count'];
+        $post_date = $row['post_date'];
+        
+        
+        
+    }
+    
+    return array($post_author, $post_id, $post_title, $post_category_id, $post_status, $post_image, $post_content, $post_tags, $post_comment_count, $post_date);
+    
+}
+
+
+
+>>>>>>> Stashed changes
 function updateCategory($cat_id) {
     global $connection;
 
