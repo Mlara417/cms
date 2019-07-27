@@ -1,37 +1,21 @@
 <?php
-function editPost() {
-    global $connection;
+function postStatusToggleUpdate($post_status) {
     
-    if(isset($_GET['p_id'])){
-
-    $the_post_id =  $_GET['p_id'];
-
-    }
-
-
-    $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
-    $selectPostsById = mysqli_query($connection,$query);
-
-    while($row = mysqli_fetch_assoc($selectPostsById)) {
-        $post_author = $row['post_author'];
-        $post_id = $row['post_id'];
-        $post_title = $row['post_title'];
-        $post_category_id = $row['post_category_id'];
-        $post_status = $row['post_status'];
-        $post_image = $row['post_image'];
-        $post_content = $row['post_content'];
-        $post_tags = $row['post_tags'];
-        $post_comment_count = $row['post_comment_count'];
-        $post_date = $row['post_date'];
-        
-        
-    }
+    if($post_status == 'published'){
     
-    return $post_title;
+    echo "<option value='draft'>draft</option>";
+    
+} else {
+    
+    echo "<option value='published'>publish</option>";
+    
+}
+
+}
 
 
-
-    if(isset($_POST['update_post'])) {
+function updatePost() {
+        if(isset($_POST['update_post'])) {
                 
         $post_author = $_POST['post_author'];
         $post_title = $_POST['post_title'];
@@ -74,6 +58,42 @@ function editPost() {
                 
         echo "<p class='bg-success'>Post Updated: <a href='../post.php?p_id={$the_post_id}'>View Posts</a> or <a href='posts.php'>Edit More Posts</a></p>";
     }
+}
+
+
+
+
+function editMyPost() {
+    global $connection;
+    
+    if(isset($_GET['p_id'])){
+
+    $the_post_id =  $_GET['p_id'];
+        }
+
+    
+
+
+    $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
+    $selectPostsById = mysqli_query($connection,$query);
+
+    while($row = mysqli_fetch_assoc($selectPostsById)) {
+        $post_author = $row['post_author'];
+        $post_id = $row['post_id'];
+        $post_title = $row['post_title'];
+        $post_category_id = $row['post_category_id'];
+        $post_status = $row['post_status'];
+        $post_image = $row['post_image'];
+        $post_content = $row['post_content'];
+        $post_tags = $row['post_tags'];
+        $post_comment_count = $row['post_comment_count'];
+        $post_date = $row['post_date'];
+        
+        return array($post_author, $post_id, $post_title, $post_category_id, $post_status, $post_image, $post_content, $post_tags, $post_comment_count, $post_date);
+        
+        
+    }
+    
 }
 
 
