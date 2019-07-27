@@ -1,4 +1,83 @@
 <?php
+function editPost() {
+    global $connection;
+    
+    if(isset($_GET['p_id'])){
+
+    $the_post_id =  $_GET['p_id'];
+
+    }
+
+
+    $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
+    $selectPostsById = mysqli_query($connection,$query);
+
+    while($row = mysqli_fetch_assoc($selectPostsById)) {
+        $post_author = $row['post_author'];
+        $post_id = $row['post_id'];
+        $post_title = $row['post_title'];
+        $post_category_id = $row['post_category_id'];
+        $post_status = $row['post_status'];
+        $post_image = $row['post_image'];
+        $post_content = $row['post_content'];
+        $post_tags = $row['post_tags'];
+        $post_comment_count = $row['post_comment_count'];
+        $post_date = $row['post_date'];
+        
+        
+    }
+    
+    return $post_title;
+
+
+
+    if(isset($_POST['update_post'])) {
+                
+        $post_author = $_POST['post_author'];
+        $post_title = $_POST['post_title'];
+        $post_category_id = $_POST['post_category'];
+        $post_status = $_POST['post_status'];
+        $post_image = $_FILES['image']['name'];
+        $post_image_temp = $_FILES['image']['tmp_name'];
+        $post_content = $_POST['post_content'];
+        $post_tags = $_POST['post_tags'];
+                
+        move_uploaded_file($post_image_temp, "../images/$post_image");
+                
+        if(empty($post_image)) {
+            
+            $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
+            
+            $select_image = mysqli_query($connection,$query);
+            
+            while($row = mysqli_fetch_array($select_image)) {
+                
+                $post_image = $row['post_image'];
+                
+            }
+        }
+                
+        $query = "UPDATE posts SET ";
+        $query .= "post_title = '{$post_title}', ";
+        $query .= "post_category_id = '{$post_category_id}', ";
+        $query .= "post_date = now(), ";
+        $query .= "post_author = '{$post_author}', ";
+        $query .= "post_status = '{$post_status}', ";
+        $query .= "post_tags = '{$post_tags}', ";
+        $query .= "post_content = '{$post_content}', ";
+        $query .= "post_image = '{$post_image}' ";
+        $query .= "WHERE post_id = {$the_post_id} ";
+                
+        $update_post = mysqli_query($connection, $query);
+                
+        confirm($update_post);
+                
+        echo "<p class='bg-success'>Post Updated: <a href='../post.php?p_id={$the_post_id}'>View Posts</a> or <a href='posts.php'>Edit More Posts</a></p>";
+    }
+}
+
+
+
 function updateCategory($cat_id) {
     global $connection;
 
@@ -238,8 +317,11 @@ echo "<td>{$cat_title}</td>";
         echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
         echo "<td><a onClick=\"javacript: return confirm('Are you sure you want to delete?');\" href='posts.php?delete={$post_id}'>Delete</a></td>";
         echo "</tr>";
+        
 
     }
+    
+    return $post_id;
     
 }
 
@@ -388,87 +470,6 @@ function viewAllUsers() {
 
     }
 }
-
-function editPost() {
-    global $connection, $post_title;
-    
-    if(isset($_GET['p_id'])){
-
-    $the_post_id =  $_GET['p_id'];
-
-    }
-
-
-    $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
-    $selectPostsById = mysqli_query($connection,$query);
-
-    while($row = mysqli_fetch_assoc($selectPostsById)) {
-        $post_author = $row['post_author'];
-        $post_id = $row['post_id'];
-        $post_title = $row['post_title'];
-        $post_category_id = $row['post_category_id'];
-        $post_status = $row['post_status'];
-        $post_image = $row['post_image'];
-        $post_content = $row['post_content'];
-        $post_tags = $row['post_tags'];
-        $post_comment_count = $row['post_comment_count'];
-        $post_date = $row['post_date'];
-    }
-
-
-
-    if(isset($_POST['update_post'])) {
-                
-        $post_author = $_POST['post_author'];
-        $post_title = $_POST['post_title'];
-        $post_category_id = $_POST['post_category'];
-        $post_status = $_POST['post_status'];
-        $post_image = $_FILES['image']['name'];
-        $post_image_temp = $_FILES['image']['tmp_name'];
-        $post_content = $_POST['post_content'];
-        $post_tags = $_POST['post_tags'];
-                
-        move_uploaded_file($post_image_temp, "../images/$post_image");
-                
-        if(empty($post_image)) {
-            
-            $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
-            
-            $select_image = mysqli_query($connection,$query);
-            
-            while($row = mysqli_fetch_array($select_image)) {
-                
-                $post_image = $row['post_image'];
-                
-            }
-        }
-                
-        $query = "UPDATE posts SET ";
-        $query .= "post_title = '{$post_title}', ";
-        $query .= "post_category_id = '{$post_category_id}', ";
-        $query .= "post_date = now(), ";
-        $query .= "post_author = '{$post_author}', ";
-        $query .= "post_status = '{$post_status}', ";
-        $query .= "post_tags = '{$post_tags}', ";
-        $query .= "post_content = '{$post_content}', ";
-        $query .= "post_image = '{$post_image}' ";
-        $query .= "WHERE post_id = {$the_post_id} ";
-                
-        $update_post = mysqli_query($connection, $query);
-                
-        confirm($update_post);
-                
-        echo "<p class='bg-success'>Post Updated: <a href='../post.php?p_id={$the_post_id}'>View Posts</a> or <a href='posts.php'>Edit More Posts</a></p>";
-    }
-    
-    
-}
-
-
-
-
-
-
 
 
 function adminUserRoleValidation() {
