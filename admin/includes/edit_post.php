@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 <?php
     if(isset($_GET['p_id'])){
 
@@ -116,13 +115,9 @@
             
 
         ?>
-=======
 <?php list($post_author, $post_id, $post_title, $post_category_id, $post_status, $post_image, $post_content, $post_tags, $post_comment_count, $post_date) = editMyPost(); ?>
 
 <?php updatePost(); ?>
->>>>>>> Stashed changes
-           
-            
             
         </select>
     </div>
