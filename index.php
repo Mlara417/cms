@@ -1,41 +1,40 @@
 <?php include "includes/db.php"; ?>
 <?php include "includes/header.php"; ?>
-    
 
-    <!-- Navigation -->
 
-    <?php include "includes/navigation.php"; ?>
+<!-- Navigation -->
 
-    <!-- Page Content -->
-    <div class="container">
+<?php include "includes/navigation.php"; ?>
 
-        <div class="row">
-            <h1 class="page-header">
-                Welcome to<br>
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+        <h1 class="page-header">
+            Welcome to<br>
             <small>My Blog</small>
-            </h1>
-            <!-- Blog Entries Column -->
-            <div class="col-md-8">
-                
-                <?php selectAllPostsQuery(); ?>
+        </h1>
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
 
-            </div>
-
-            <!-- Blog Sidebar Widgets Column -->
-            
-            <?php include "includes/sidebar.php"?>
-                
-
-                <!-- Side Widget Well -->
-                <?php include "widget.php";  ?>
-            
-
-            </div>
+            <?php selectAllPostsQuery(); ?>
 
         </div>
-        <!-- /.row -->
 
-        <hr>
+        <!-- Blog Sidebar Widgets Column -->
 
-       <?php include "includes/footer.php"?>
-        
+        <?php include "includes/sidebar.php"?>
+
+
+        <!-- Side Widget Well -->
+        <?php include "widget.php";  ?>
+
+
+    </div>
+
+</div>
+<!-- /.row -->
+
+<hr>
+
+<?php include "includes/footer.php"?>
